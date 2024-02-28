@@ -1,12 +1,14 @@
+//creating http server
 const http = require('http');
+const {readFileSync} = require('fs')
 
-        //creating http server and pages  to be served with /'page-name'
+const page = readFileSync('./index.html')
 const server = http.createServer((req, res) => {
     try {
         if (req.url == '/') {
-            res.writeHead(200, { 'content-type': 'text/html' });
-            res.write('<h1>Hello world</h1>');
-            res.end();      //.end() is used to conclude the response.
+            res.writeHead(200, { 'content-type': 'text/plain' });
+            res.write(page);
+            res.end();      
         } else if (req.url == '/about') {
             res.writeHead(200, { 'content-type': 'text/html' });
             res.write('<h1>This is about page</h1>');
@@ -17,7 +19,6 @@ const server = http.createServer((req, res) => {
             res.end();
         }
     } 
-        //this catch displays if there is any server-side error
     catch (error) {
         console.error('An error occurred:', error);
         res.writeHead(500, { 'content-type': 'text/plain' });
